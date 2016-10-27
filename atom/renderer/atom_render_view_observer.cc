@@ -101,6 +101,7 @@ void AtomRenderViewObserver::EmitIPCEvent(blink::WebFrame* frame,
     return;
 
   v8::Local<v8::Object> ipc;
+
   if (GetIPCObject(isolate, context, &ipc)) {
     auto args_vector = ListValueToVector(isolate, args);
     // Insert the Event object, event.sender is ipc.
