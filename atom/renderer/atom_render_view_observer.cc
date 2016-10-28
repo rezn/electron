@@ -156,7 +156,8 @@ void AtomRenderViewObserver::OnDestruct() {
   delete this;
 }
 
-void AtomRenderViewObserver::OnBrowserMessage(bool send_to_all,
+void AtomRenderViewObserver::OnBrowserMessage(int sender_id,
+                                              bool send_to_all,
                                               const base::string16& channel,
                                               const base::ListValue& args) {
   if (!document_created_)

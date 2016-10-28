@@ -321,11 +321,13 @@ class WebContents : public mate::TrackableObject<WebContents>,
   void OnCursorChange(const content::WebCursor& cursor);
 
   // Called when received a message from renderer.
-  void OnRendererMessage(const base::string16& channel,
+  void OnRendererMessage(int sender_id,
+                         const base::string16& channel,
                          const base::ListValue& args);
 
   // Called when received a synchronous message from renderer.
-  void OnRendererMessageSync(const base::string16& channel,
+  void OnRendererMessageSync(int sender_id,
+                             const base::string16& channel,
                              const base::ListValue& args,
                              IPC::Message* message);
 

@@ -1628,13 +1628,15 @@ AtomBrowserContext* WebContents::GetBrowserContext() const {
   return static_cast<AtomBrowserContext*>(web_contents()->GetBrowserContext());
 }
 
-void WebContents::OnRendererMessage(const base::string16& channel,
+void WebContents::OnRendererMessage(int sender_id,
+                                    const base::string16& channel,
                                     const base::ListValue& args) {
   // webContents.emit(channel, new Event(), args...);
   Emit(base::UTF16ToUTF8(channel), args);
 }
 
-void WebContents::OnRendererMessageSync(const base::string16& channel,
+void WebContents::OnRendererMessageSync(int sender_id,
+                                        const base::string16& channel,
                                         const base::ListValue& args,
                                         IPC::Message* message) {
   // webContents.emit(channel, new Event(sender, message), args...);

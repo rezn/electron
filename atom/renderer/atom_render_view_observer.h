@@ -36,7 +36,8 @@ class AtomRenderViewObserver : public content::RenderViewObserver {
   bool OnMessageReceived(const IPC::Message& message) override;
   void OnDestruct() override;
 
-  void OnBrowserMessage(bool send_to_all,
+  void OnBrowserMessage(int sender_id,
+                        bool send_to_all,
                         const base::string16& channel,
                         const base::ListValue& args);
 

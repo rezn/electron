@@ -21,18 +21,19 @@ IPC_STRUCT_TRAITS_BEGIN(atom::DraggableRegion)
   IPC_STRUCT_TRAITS_MEMBER(bounds)
 IPC_STRUCT_TRAITS_END()
 
-IPC_MESSAGE_ROUTED2(AtomViewHostMsg_Message,
+IPC_MESSAGE_ROUTED3(AtomViewHostMsg_Message,
+                    int /* Sending webContents id */,
                     base::string16 /* channel */,
                     base::ListValue /* arguments */)
 
 IPC_SYNC_MESSAGE_ROUTED3_1(AtomViewHostMsg_Message_Sync,
-                           int senderId   /* Sending webContents id */,
+                           int /* Sending webContents id */,
                            base::string16 /* channel */,
                            base::ListValue /* arguments */,
                            base::string16 /* result (in JSON) */)
 
 IPC_MESSAGE_ROUTED4(AtomViewMsg_Message,
-                    int senderId   /* Sending webContents id */,
+                    int /* Sending webContents id */,
                     bool /* send_to_all */,
                     base::string16 /* channel */,
                     base::ListValue /* arguments */)
