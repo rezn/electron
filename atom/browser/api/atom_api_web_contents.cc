@@ -1251,7 +1251,10 @@ void WebContents::TabTraverse(bool reverse) {
 bool WebContents::SendIPCMessage(bool all_frames,
                                  const base::string16& channel,
                                  const base::ListValue& args) {
-  return Send(new AtomViewMsg_Message(routing_id(), this->ID(), all_frames, channel, args));
+  return Send(
+    new AtomViewMsg_Message(
+      routing_id(), this->ID(),
+      all_frames, channel, args));
 }
 
 void WebContents::SendInputEvent(v8::Isolate* isolate,
