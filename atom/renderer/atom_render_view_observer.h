@@ -26,6 +26,7 @@ class AtomRenderViewObserver : public content::RenderViewObserver {
   virtual ~AtomRenderViewObserver();
 
   virtual void EmitIPCEvent(blink::WebFrame* frame,
+                            int sender_id,
                             const base::string16& channel,
                             const base::ListValue& args);
 

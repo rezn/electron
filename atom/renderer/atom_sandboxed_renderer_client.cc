@@ -86,6 +86,7 @@ class AtomSandboxedRenderViewObserver : public AtomRenderViewObserver {
 
  protected:
   void EmitIPCEvent(blink::WebFrame* frame,
+                    int sender_id,
                     const base::string16& channel,
                     const base::ListValue& args) override {
     if (!frame || frame->isWebRemoteFrame())
@@ -97,12 +98,13 @@ class AtomSandboxedRenderViewObserver : public AtomRenderViewObserver {
     v8::Context::Scope context_scope(context);
     v8::Local<v8::Value> argv[] = {
       mate::ConvertToV8(isolate, channel),
-      mate::ConvertToV8(isolate, args)
+      mate::ConvertToV8(isolate, args),
+      mate::ConvertToV8(isolate, sender_id)
     };
     renderer_client_->InvokeBindingCallback(
         context,
         "onMessage",
-        std::vector<v8::Local<v8::Value>>(argv, argv + 2));
+        std::vector<v8::Local<v8::Value>>(argv, argv + 3));
   }
 
  private:

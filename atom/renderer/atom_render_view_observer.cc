@@ -47,6 +47,7 @@ bool GetIPCObject(v8::Isolate* isolate,
   if (value.IsEmpty() || !value->IsObject())
     return false;
   *ipc = value->ToObject();
+
   return true;
 }
 
@@ -84,6 +85,7 @@ AtomRenderViewObserver::~AtomRenderViewObserver() {
 }
 
 void AtomRenderViewObserver::EmitIPCEvent(blink::WebFrame* frame,
+                                          int sender_id,
                                           const base::string16& channel,
                                           const base::ListValue& args) {
   if (!frame || frame->isWebRemoteFrame())
@@ -107,6 +109,7 @@ void AtomRenderViewObserver::EmitIPCEvent(blink::WebFrame* frame,
     // Insert the Event object, event.sender is ipc.
     mate::Dictionary event = mate::Dictionary::CreateEmpty(isolate);
     event.Set("sender", ipc);
+    event.Set("senderWebContentsId", sender_id);
     args_vector.insert(args_vector.begin(), event.GetHandle());
     mate::EmitEvent(isolate, ipc, channel, args_vector);
   }
@@ -170,13 +173,13 @@ void AtomRenderViewObserver::OnBrowserMessage(int sender_id,
   if (!frame || frame->isWebRemoteFrame())
     return;
 
-  EmitIPCEvent(frame, channel, args);
+  EmitIPCEvent(frame, sender_id, channel, args);
 
   // Also send the message to all sub-frames.
   if (send_to_all) {
     for (blink::WebFrame* child = frame->firstChild(); child;
          child = child->nextSibling())
-      EmitIPCEvent(child, channel, args);
+      EmitIPCEvent(child, sender_id, channel, args);
   }
 }
 
